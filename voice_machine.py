@@ -11,10 +11,13 @@ dp = Dispatcher(bot=bot)
 
 @dp.message_handler(content_types=types.ContentType.TEXT)
 async def send_voice(msg: types.Message) -> None:
-    current_language=gTTS(lang='en')  # По умолчанию установим язык татарский
+    current_language = 'en'
 
-    current_language = msg.reply_to_message.text
-    await msg.reply(f'Установлен язык: {current_language}')
+    if msg.reply_to_message:
+        current_language = msg.reply_to_message.text
+        await msg.reply('Установлен язык: {current_language}')
+    else:
+        await msg.reply('Язык по умолчанию: английский')
 
     text = msg.text
     filename = f'{msg.chat.id}_{msg.message_id}.mp3'
@@ -30,4 +33,9 @@ async def send_voice(msg: types.Message) -> None:
 
 if __name__ == '__main__':
     executor.start_polling(dp)
+
+
+
+
+
 
