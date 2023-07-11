@@ -20,9 +20,11 @@ def convert(msg=None):
     with open(filename, 'rb') as f:
         bot.send_audio(chat_id=msg.chat.id, audio=f)
     os.remove(filename)
+
 @dp.message_handler(commands=["start"])
 async def say_hi(msg: types.Message):
     await msg.answer("Ok, choose your language", reply_markup=main)
+
 
 @dp.message_handler(text="English 🇺🇸")
 async def eng(msg: types.Message):
